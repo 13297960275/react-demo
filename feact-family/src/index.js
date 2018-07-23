@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
-// import App from './components/staff/ManageSystem';
-// import App from './components/test/index';
-import App from './components/test/FunctionComp';
+import App from './App';
+import ManageSystem from './components/staff/ManageSystem';
+import index from './components/test/index';
+import FunctionComp from './components/test/FunctionComp';
 
 import Toggle from './components/test/Toggle';
 import Popper from './components/test/Popper';
@@ -17,7 +17,7 @@ import {FancyBorder, WelcomeDialog, Dialog, SignUpDialog} from './components/tes
 
 import registerServiceWorker from './registerServiceWorker';
 
-// 	ReactDOM.render(<App name="World" />, document.getElementById('root'));
+// 	ReactDOM.render(<FunctionComp name="World" />, document.getElementById('root'));
 
 // 组件和props
 // function tick() {
@@ -136,8 +136,7 @@ function NumberList(props) {
     <ul>
       {numbers.map((number) =>
         <ListItem key={number.toString()}
-                  value={number} />
-
+          value={number} />
       )}
     </ul>
   );
