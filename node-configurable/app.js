@@ -109,20 +109,41 @@ function pagination(p, s) {
     })
 }
 
-function inputJson(file, jsonKey, jsonStr) {
+/**
+ * file         文件
+ * jsonKeyArr   json key数组
+ * jsonStrArr   json value数组
+ */
+function inputJson(file, jsonKeyArr, jsonStrArr) {
     fs.readFile(file, function(err, data) {
         if (err) {
+            console.error('读取失败');
             console.error(err);
             return;
         }
+        console.log('--------------------读取成功');
         var json = data.toString();
         json = JSON.parse(json);
-        console.log(json)
-        json[jsonKey] = jsonStr;
+        for (var i = 0; i < jsonKeyArr.length; i++) {
+            var keys = jsonKeyArr[i].split('>');
+            var l = keys.length;
+            if (l == 1) {// 跟对象处理
+                json[jsonKeyArr[i]] = jsonStrArr[i];
+            } else {// 对象嵌套的处理
+                var key = json;
+                for (var j = 0; j < l; j++) {
+                    var value = keys[j]
+                    if (j == l - 1) {
+                        key[value] = jsonStrArr[i];
+                    }
+                    key = key[value];
+                }
+            }
+        }
         var str = JSON.stringify(json);
-        //console.log(str);
         fs.writeFile(file, str, function(err) {
             if (err) {
+                console.error('写入失败');
                 console.error(err);
                 return;
             }
@@ -136,4 +157,4 @@ function inputJson(file, jsonKey, jsonStr) {
 // deleteJson(5);//执行一下
 // writeJson(params) //执行一下;
 
-inputJson('./config.json', 'title', '时空云超脑平台')
+inputJson('./config.json', ['title', 'subtitle', 'loadingPage>backgroundImage>visible1', 'loadingPage>backgroundColor'], ['超脑平台', '可视化', true, 'red'])
