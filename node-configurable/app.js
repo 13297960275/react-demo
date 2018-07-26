@@ -109,6 +109,75 @@ function pagination(p, s) {
     })
 }
 
+
+var projectData = {
+    'name': 'Second',
+    'type': 'dir',
+    'fileData': [
+        {
+            'name': 'css',
+            'type': 'dir',
+            'fileData': [
+                {
+                    'name': 'index.css',
+                    'type': 'file',
+                    'content': '* {margin: 0; padding: 0;}'
+                }
+            ]
+        }, {
+            'name': 'js',
+            'type': 'dir',
+            'fileData': [
+                {
+                    'name': 'index.js',
+                    'type': 'file',
+                    'content': 'console.log("js")'
+                }
+            ]
+        }, {
+            'name': 'image',
+            'type': 'dir',
+            'fileData': [
+                {
+                    'name': 'logo.svg',
+                    'type': 'file',
+                    'content': '<svg></svg>'
+                }
+            ]
+        }, {
+            'name': 'index.html',
+            'type': 'file',
+            'content': '<html>\n\t<head>\n\t\t<title>BaiDu</title>\n\t</head>\n\t<body>\n\t\t<h1><a href="http://www.baidu.com">BD</a></h1>\n\t</body>\n</html>'
+        }
+    ]
+};
+function mdDir(projectData) {
+    if (projectData.name) {
+        fs.mkdirSync(projectData.name);
+        var fileData = projectData.fileData;
+        if (fileData && fileData.forEach) {
+            fileData.forEach(function(f) {
+                f.path = projectData.name + '/' + f.name;
+                f.content = f.content || '';
+                switch (f.type) {
+                    case 'dir':
+                        fs.mkdirSync(f.path);
+                        break;
+                    case 'file':
+                        fs.writeFileSync(f.path, f.content, 'utf-8');
+                        break;
+                    default:
+                        break;
+                }
+            })
+        }
+    } else {
+        console.log('请输入文件名')
+    }
+}
+// mdDir(projectData)
+
+
 /**
  * file         文件
  * jsonKeyArr   json key数组
@@ -126,20 +195,17 @@ function inputJson(file, jsonKeyArr, jsonStrArr) {
         json = JSON.parse(json);
         for (var i = 0; i < jsonKeyArr.length; i++) {
             var keys = jsonKeyArr[i].split('>');
-            var l = keys.length;
-            if (l == 1) {// 跟对象处理
-                json[jsonKeyArr[i]] = jsonStrArr[i];
-            } else {// 对象嵌套的处理
-                var key = json;
-                for (var j = 0; j < l; j++) {
-                    var value = keys[j]
-                    if (j == l - 1) {
-                        key[value] = jsonStrArr[i];
-                    }
-                    key = key[value];
-                }
+            var keyStr = 'json'
+            for (var j = 0; j < keys.length; j++) {
+                keyStr = keyStr + '.' + keys[j];
+                eval(keyStr) ? '' : eval(keyStr + '|| {}')
             }
+            console.log(keyStr)
+            // console.log(jsonStrArr[i])
+
+            eval('Array.isArray(' + keyStr + ') ? ' + keyStr + ' = ' + keyStr + '.concat(jsonStrArr[i]) : ' + keyStr + '=jsonStrArr[i]')
         }
+        // console.log(json)
         var str = JSON.stringify(json);
         fs.writeFile(file, str, function(err) {
             if (err) {
@@ -157,4 +223,18 @@ function inputJson(file, jsonKeyArr, jsonStrArr) {
 // deleteJson(5);//执行一下
 // writeJson(params) //执行一下;
 
-inputJson('./config.json', ['title', 'subtitle', 'loadingPage>backgroundImage>visible1', 'loadingPage>backgroundColor'], ['超脑平台', '可视化', true, 'red'])
+inputJson('./config.json', ['title', 'subtitle', 'loadingPage>backgroundImage>visible1', 'loadingPage>backgroundColor', 'loadingPage>test', 'a>b>c>d', 'modules'], ['超脑平台', '可视化', true, 'red', {show:true,loop:true,delay:500,title:'test'}, {a:1,b:2,c:3}, [{
+        id: "[module_id]",
+        label: "[module_label]",
+        uri: "[module_uri]",
+        icon: "[icon]",
+        activeIcon: "[activeIcon]",
+        showAsMenu: true
+    }, {
+        id: "[module_id]",
+        label: "[module_label]",
+        uri: "[module_uri]",
+        icon: "[icon]",
+        activeIcon: "[activeIcon]",
+        showAsMenu: true
+    }]])

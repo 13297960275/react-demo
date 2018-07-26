@@ -1,1 +1,88 @@
-{"title":"超脑平台","subtitle":"可视化","version":"0.5","logo":"logo.png","copyright":"Copyright © 2018 Coco. All Rights Reserved.","location":"合肥","theme":{"name":"default"},"loadingPage":{"backgroundColor":"red","backgroundImage":{"visible":"truefalse","visible1":true},"loadingGif":{"visible":true,"uri":"configs/loading/images/predefined_loading_1.gif","width":58,"height":29}},"modules":[{"id":"home","label":"首页","uri":"Home","icon":"home.png","activeIcon":"home_active.png","showAsMenu":true},{"id":"traffic","label":"智慧交通","uri":"Traffic","icon":"traffic.png","activeIcon":"traffic_active.png","showAsMenu":true},{"id":"[module_id]","label":"[module_label]","uri":"[module_uri]","icon":"[icon]","activeIcon":"[activeIcon]","showAsMenu":true},{"id":"[module_id]","label":"[module_label]","uri":"[module_uri]","icon":"[icon]","activeIcon":"[activeIcon]","showAsMenu":true}]}
+{
+	"title": "超脑平台",
+	"subtitle": "可视化",
+	"version": "0.5",
+	"logo": "logo.png",
+	"copyright": "Copyright © 2018 Coco. All Rights Reserved.",
+	"location": "合肥",
+	"theme": {
+		"name": "default"
+	},
+	"modules": [{
+		"id": "home",
+		"label": "首页",
+		"uri": "Home",
+		"icon": "home.png",
+		"activeIcon": "home_active.png",
+		"showAsMenu": true
+	}, {
+		"id": "traffic",
+		"label": "智慧交通",
+		"uri": "Traffic",
+		"icon": "traffic.png",
+		"activeIcon": "traffic_active.png",
+		"showAsMenu": true
+	}, {
+		"id": "[module_id]",
+		"label": "[module_label]",
+		"uri": "[module_uri]",
+		"icon": "[icon]",
+		"activeIcon": "[activeIcon]",
+		"showAsMenu": true
+	}, {
+		"id": "[module_id]",
+		"label": "[module_label]",
+		"uri": "[module_uri]",
+		"icon": "[icon]",
+		"activeIcon": "[activeIcon]",
+		"showAsMenu": true
+	}, {
+		"id": "[module_id]",
+		"label": "[module_label]",
+		"uri": "[module_uri]",
+		"icon": "[icon]",
+		"activeIcon": "[activeIcon]",
+		"showAsMenu": true
+	}, {
+		"id": "[module_id]",
+		"label": "[module_label]",
+		"uri": "[module_uri]",
+		"icon": "[icon]",
+		"activeIcon": "[activeIcon]",
+		"showAsMenu": true
+	}, {
+		"id": "[module_id]",
+		"label": "[module_label]",
+		"uri": "[module_uri]",
+		"icon": "[icon]",
+		"activeIcon": "[activeIcon]",
+		"showAsMenu": true
+	}, {
+		"id": "[module_id]",
+		"label": "[module_label]",
+		"uri": "[module_uri]",
+		"icon": "[icon]",
+		"activeIcon": "[activeIcon]",
+		"showAsMenu": true
+	}],
+	"loadingPage": {
+		"backgroundImage": {
+			"visible": true,
+			"visible1": true
+		},
+		"backgroundColor": "red",
+		"test": {
+			"show": true,
+			"loop": true,
+			"delay": 500,
+			"title": "test"
+		}
+	},
+	"a": {
+		"b": {
+			"a": 1,
+			"b": 2,
+			"c": 3
+		}
+	}
+}

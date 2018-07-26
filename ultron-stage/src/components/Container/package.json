@@ -1,0 +1,53 @@
+{
+  "nameCn": "容器",
+  "type": "Layout",
+  "styles": {
+    "color": {
+      "value": "#000000",
+      "type": "color"
+    },
+    "font-size": {
+      "value": "16px",
+      "type": "size"
+    },
+    "display": {
+      "value": "block",
+      "type": "select",
+      "items": ["block", "inline", "inline-block", "none"]
+    },
+    "position": {
+      "value": "relative",
+      "type": "select",
+      "items": ["relative", "absolute", "fixed", "none", "static"]
+    },
+    "width": {
+      "value": "100%",
+      "type": "size"
+    },
+    "height": {
+      "value": "100%",
+      "type": "size"
+    },
+    "top": {
+      "value": "auto",
+      "type": "size"
+    },
+    "right": {
+      "value": "auto",
+      "type": "size"
+    },
+    "bottom": {
+      "value": "auto",
+      "type": "size"
+    },
+    "left": {
+      "value": "auto",
+      "type": "size"
+    }
+  },
+  "attrs": {
+    "name": {
+      "value": "container"
+    }
+  }
+}
