@@ -1,15 +1,13 @@
 import React from 'react'
 
+import './index.less'
+
 export default class Footer extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-    
-    render() {
-        return (
-            <div>
-            	Footer
-            </div>
-        )
-    }
+	render() {
+		return (
+			<div className="footer">
+      	Copyright © 2018 Lingesin
+      </div>
+		)
+	}
 }
