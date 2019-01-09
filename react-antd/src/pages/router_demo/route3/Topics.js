@@ -1,10 +1,10 @@
 import React from 'react'
 
-export default class Main extends React.Component {
+export default class Topics extends React.Component {
   render() {
     return (
       <div>
-				Main page 1
+				Topics page 3
 			</div>
     )
   }

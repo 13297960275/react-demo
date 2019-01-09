@@ -1,7 +1,7 @@
 import React from 'react'
-import {
-  Menu
-} from 'antd'
+import { Menu } from 'antd'
+import { NavLink } from 'react-router-dom'
+
 import menuList from './../../configs/menu-config.js'
 
 import './index.less'
@@ -30,7 +30,9 @@ export default class NavLeft extends React.Component {
           </SubMenu>
         )
       }
-      return <Menu.Item title={elem.title} key={elem.path}> {elem.title} </Menu.Item>
+      return <Menu.Item title={elem.title} key={elem.path}> 
+       <NavLink to={elem.path}> {elem.title} </NavLink>
+      </Menu.Item>
     })
   }
 
@@ -38,7 +40,7 @@ export default class NavLeft extends React.Component {
     return (
       <div>
         <div className="logo">
-          <img src="/assets/antd.svg" alt="" />
+          <img src="./assets/antd.svg" alt="" />
           <h1> React Antd </h1>
         </div>
 

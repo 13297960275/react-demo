@@ -1,16 +1,23 @@
+@import './../../styles/default.less';
+
 .logo {
-	line-height: 90px;
-	padding-left: 20px;
-	background-color: #002059;
+	height: 100px;
+	background-color: @colorS;
+	display: flex;
+	justify-content: center;
+	justify-items: center;    
+	align-content: center;
+	align-items: center;
 	img {
 		// width: calc(100% - 40px);
 		height: 35px;
+		width: 35px;
 		vertical-align: middle;
 	}
 	h1 {
 		display: inline-block;
 		font-size: 20px;
-		color: #fff;
+		color: @colorM;
 		vertical-align: middle;
 		margin: 0 0 0 10px;
 	}

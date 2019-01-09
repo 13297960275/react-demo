@@ -1,10 +1,10 @@
 import React from 'react'
 
-export default class Main extends React.Component {
+export default class About extends React.Component {
   render() {
     return (
       <div>
-				Main page 1
+				About page 2
 			</div>
     )
   }

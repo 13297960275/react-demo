@@ -6,9 +6,10 @@ export default class Home extends React.Component {
     return (
       <div>
         <ul>
-          <li><Link to="/main"> 首页2 </Link></li>
-          <li><Link to="/about"> 关于2 </Link></li>
-          <li><Link to="/topics"> 主题列表2 </Link></li>
+          <li><Link to="/main"> 首页3 </Link></li>
+          <li><Link to="/about"> 关于3 </Link></li>
+          <li><Link to="/topics"> 主题列表3 </Link></li>
+          <li><Link to="/other"> 其他3 </Link></li>
         </ul>
         <hr />
         {this.props.children}

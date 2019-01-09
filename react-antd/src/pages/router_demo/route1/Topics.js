@@ -4,7 +4,7 @@ export default class Topics extends React.Component {
   render() {
     return (
       <div>
-				Topics page
+				Topics page 1
 			</div>
     )
   }
