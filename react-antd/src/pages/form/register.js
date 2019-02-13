@@ -17,7 +17,8 @@ import {
   Tooltip,
   Row,
   Col,
-  AutoComplete
+  AutoComplete,
+  Cascader
 } from "antd";
 import moment from "moment";
 const FormItem = Form.Item;
@@ -25,6 +26,29 @@ const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const TextArea = Input.TextArea;
 const AutoCompleteOption = AutoComplete.Option;
+const residences = [{
+  value: 'zhejiang',
+  label: '浙江',
+  children: [{
+    value: 'hangzhou',
+    label: '杭州',
+    children: [{
+      value: 'xihu',
+      label: '西湖',
+    }],
+  }],
+}, {
+  value: 'jiangsu',
+  label: '江苏',
+  children: [{
+    value: 'nanjing',
+    label: '南京',
+    children: [{
+      value: 'zhonghuamen',
+      label: '中华门',
+    }],
+  }],
+}];
 class FormRegister extends React.Component {
   state = {
     autoCompleteResult: []
@@ -39,7 +63,7 @@ class FormRegister extends React.Component {
         console.log(JSON.stringify(userInfo));
         message.success(
           `${userInfo.userName} 恭喜你，注册成功；当前密码为：${
-            userInfo.userPwd
+          userInfo.userPwd
           }`
         );
       }
@@ -135,7 +159,7 @@ class FormRegister extends React.Component {
         <Option value="86">+86</Option>
         <Option value="87">+87</Option>
       </Select>
-    );
+      );
 
     const websiteOptions = autoCompleteResult.map(website => (
       <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
@@ -182,10 +206,10 @@ class FormRegister extends React.Component {
               })(
                 <Input
                   type="password"
-                  placeholder="请确认密码"
+                  placeholder="请输入确认密码"
                   onBlur={this.handleConfirmBlur}
                 />
-              )}
+                )}
             </Form.Item>
             <Form.Item
               {...formItemLayout}
@@ -221,29 +245,33 @@ class FormRegister extends React.Component {
                     message: "请输入邮箱"
                   }
                 ]
-              })(<Input />)}
+              })(<Input placeholder="请输入确认密码" />)}
             </Form.Item>
-            <Form.Item {...formItemLayout} label="Phone Number">
+            <Form.Item {...formItemLayout} label="手机号">
               {getFieldDecorator("phone", {
                 rules: [
-                  { required: true, message: "Please input your phone number!" }
+                  { required: true, message: "请输入手机号" },
+                  {
+                    pattern: /^1(3|4|5|7|8)\d{9}$/,
+                    message: "手机号格式错误"
+                  }
                 ]
               })(
-                <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
-              )}
+                <Input placeholder="请输入手机号" addonBefore={prefixSelector} style={{ width: "100%" }} />
+                )}
             </Form.Item>
-            <Form.Item {...formItemLayout} label="Website">
+            <Form.Item {...formItemLayout} label="网址">
               {getFieldDecorator("website", {
-                rules: [{ required: true, message: "Please input website!" }]
+                rules: [{ required: true, message: "请输入网址" }]
               })(
                 <AutoComplete
                   dataSource={websiteOptions}
                   onChange={this.handleWebsiteChange}
-                  placeholder="website"
+                  placeholder="请输入网址"
                 >
                   <Input />
                 </AutoComplete>
-              )}
+                )}
             </Form.Item>
 
             <FormItem label="性别" {...formItemLayout}>
@@ -254,7 +282,7 @@ class FormRegister extends React.Component {
                   <Radio value="1">男</Radio>
                   <Radio value="2">女</Radio>
                 </RadioGroup>
-              )}
+                )}
             </FormItem>
             <FormItem label="年龄" {...formItemLayout}>
               {getFieldDecorator("age", {
@@ -272,7 +300,7 @@ class FormRegister extends React.Component {
                   <Option value="4">百度FE</Option>
                   <Option value="5">创业者</Option>
                 </Select>
-              )}
+                )}
             </FormItem>
             <FormItem label="爱好" {...formItemLayout}>
               {getFieldDecorator("interest", {
@@ -288,8 +316,19 @@ class FormRegister extends React.Component {
                   <Option value="7">桌球</Option>
                   <Option value="8">麦霸</Option>
                 </Select>
-              )}
+                )}
             </FormItem>
+            <Form.Item
+              {...formItemLayout}
+              label="常住地"
+            >
+              {getFieldDecorator('residence', {
+                initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+                rules: [{ type: 'array', required: true, message: 'Please select your habitual residence!' }],
+              })(
+                <Cascader options={residences} />
+                )}
+            </Form.Item>
             <FormItem label="是否已婚" {...formItemLayout}>
               {getFieldDecorator("isMarried", {
                 valuePropName: "checked",
@@ -320,15 +359,15 @@ class FormRegister extends React.Component {
                   {this.state.userImg ? (
                     <img src={this.state.userImg} alt="" />
                   ) : (
-                    <Icon type="plus" />
-                  )}
+                      <Icon type="plus" />
+                    )}
                 </Upload>
               )}
             </FormItem>
             <Form.Item
               {...formItemLayout}
-              label="Captcha"
-              extra="We must make sure that your are a human."
+              label="验证码"
+              extra="请输入正确的验证码"
             >
               <Row gutter={8}>
                 <Col span={12}>
@@ -336,18 +375,18 @@ class FormRegister extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: "Please input the captcha you got!"
+                        message: "请输入验证码"
                       }
                     ]
                   })(<Input />)}
                 </Col>
                 <Col span={12}>
-                  <Button>Get captcha</Button>
+                  <Button type="primary">获取验证码</Button>
                 </Col>
               </Row>
             </Form.Item>
             <FormItem {...offsetLayout}>
-              {getFieldDecorator("userImg")(
+              {getFieldDecorator("security")(
                 <Checkbox>
                   我已阅读过<a href="javascript:void(0)">安全协议</a>
                 </Checkbox>
