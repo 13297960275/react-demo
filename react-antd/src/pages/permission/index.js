@@ -2,7 +2,7 @@ import React from 'react'
 import {Card, Button, Form, Input, Select, Tree, Transfer, Modal} from 'antd'
 import axios from '../../axios/index'
 import ETable from '../../components/ETable/index'
-import menuConfig from '../../config/menu-config'
+import menuConfig from '../../configs/menu-config'
 import Utils from '../../utils/util'
 const FormItem = Form.Item;
 const Option = Select.Option;

@@ -6,8 +6,8 @@ import Login from './pages/login'
 import Admin from './admin'
 import Home from './pages/home'
 
-import Buttons from './pages/ui/buttons.1'
-import Modals from './pages/ui/modals.1'
+import Buttons from './pages/ui/buttons'
+import Modals from './pages/ui/modals'
 import Loadings from './pages/ui/loadings'
 import Notice from './pages/ui/notice'
 import Messages from './pages/ui/messages'
@@ -17,6 +17,7 @@ import Carousel from './pages/ui/carousel'
 
 import FormLogin from './pages/form/login'
 import FormRegister from './pages/form/register'
+import baseForm from './pages/form/baseForm'
 
 import BasicTable from './pages/table/basicTable'
 import HighTable from './pages/table/highTable'
@@ -31,7 +32,7 @@ import User from './pages/user/index'
 import Bar from './pages/echarts/bar/index'
 import Pie from './pages/echarts/pie/index'
 import Line from './pages/echarts/line/index'
-// import Permission from './pages/permission'
+import Permission from './pages/permission'
 
 import NoMatch from './pages/noMatch'
 
@@ -48,7 +49,7 @@ export default class IRouter extends React.Component {
               </Common>
             }
             /> */}
-            <Route path="/ui" render={() =>
+            <Route path="/" render={() =>
               <Admin>
                 <Switch>
                   <Route path='/home' component={Home} />
@@ -62,6 +63,7 @@ export default class IRouter extends React.Component {
                   <Route path="/ui/carousel" component={Carousel} />
                   <Route path="/form/login" component={FormLogin} />
                   <Route path="/form/reg" component={FormRegister} />
+                  <Route path="/form/base" component={baseForm} />
                   <Route path="/table/basic" component={BasicTable} />
                   <Route path="/table/high" component={HighTable} />
                   <Route path='/rich' component={Rich} />
@@ -72,7 +74,7 @@ export default class IRouter extends React.Component {
                   <Route path="/charts/bar" component={Bar} />
                   <Route path="/charts/pie" component={Pie} />
                   <Route path="/charts/line" component={Line} />
-                  {/* <Route path="/permission" component={Permission} /> */}
+                  <Route path="/permission" component={Permission} />
                   <Redirect to="/home" />
                   {/* <Route component={NoMatch} /> */}
                 </Switch>

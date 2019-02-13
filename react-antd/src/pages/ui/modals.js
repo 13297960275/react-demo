@@ -1,73 +1,111 @@
-import React, { Component } from 'react';
-import { Card, Modal, Button } from 'antd'
+import React from "react";
+import { Card, Button, Modal } from "antd";
+import "./ui.less";
+export default class Buttons extends React.Component {
+  state = {
+    showModal1: false,
+    showModal2: false,
+    showModal3: false,
+    showModal4: false
+  };
 
-export default class Modals extends Component {
-  state = { 
-    visible1: false,
-
-    ModalText: 'Content of the modal',
-    visible2: false,
-    confirmLoading: false,
-
-    
-  }
-
-  showModal1 = () => {
+  handleOpen = type => {
     this.setState({
-      visible1: true,
+      [type]: true
     });
-  }
+  };
 
-  handleOk1 = (e) => {
-    console.log(e);
-    this.setState({
-      visible1: false,
+  handleConfirm = type => {
+    Modal[type]({
+      title: "确认？",
+      content: "你确定你学会了React了吗？",
+      onOk() {
+        console.log("Ok");
+      },
+      onCancel() {
+        console.log("Cancel");
+      }
     });
-  }
-
-  handleCancel1 = (e) => {
-    console.log(e);
-    this.setState({
-      visible1: false,
-    });
-  }
-
+  };
   render() {
     return (
       <div>
-        <Card title="基础弹框">
-          <Button type="primary" onClick={this.showModal1}>
-            Open Modal
-        </Button>
-          <Modal
-            title="Basic Modal"
-            visible={this.state.visible1}
-            onOk={this.handleOk1}
-            onCancel={this.handleCancel1}
-          >
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-          </Modal>
+        <Card title="基础模态框" className="card-wrap">
+          <Button type="primary" onClick={() => this.handleOpen("showModal1")}>
+            Open
+          </Button>
+          <Button type="primary" onClick={() => this.handleOpen("showModal2")}>
+            自定义页脚
+          </Button>
+          <Button type="primary" onClick={() => this.handleOpen("showModal3")}>
+            顶部20px弹框
+          </Button>
+          <Button type="primary" onClick={() => this.handleOpen("showModal4")}>
+            水平垂直居中
+          </Button>
         </Card>
-
-        <Card title="block属性">
+        <Card title="信息确认框" className="card-wrap">
+          <Button type="primary" onClick={() => this.handleConfirm("confirm")}>
+            Confirm
+          </Button>
+          <Button type="primary" onClick={() => this.handleConfirm("info")}>
+            Info
+          </Button>
+          <Button type="primary" onClick={() => this.handleConfirm("success")}>
+            Success
+          </Button>
+          <Button type="primary" onClick={() => this.handleConfirm("warning")}>
+            Warning
+          </Button>
         </Card>
-
-        <Card title="按钮组">
-        </Card>
-
-        <Card title="带图标的按钮">
-        </Card>
-
-        <Card title="Loading按钮">
-        </Card>
-
-        <Card title="Multiple按钮">
-        </Card>
-
-        <Card title="按钮尺寸">
-        </Card>
+        <Modal
+          title="React"
+          visible={this.state.showModal1}
+          onCancel={() => {
+            this.setState({
+              showModal1: false
+            });
+          }}
+        >
+          <p>欢迎学习React Antd课程</p>
+        </Modal>
+        <Modal
+          title="React"
+          visible={this.state.showModal2}
+          okText="好的"
+          cancelText="算了"
+          onCancel={() => {
+            this.setState({
+              showModal2: false
+            });
+          }}
+        >
+          <p>欢迎学习React Antd课程</p>
+        </Modal>
+        <Modal
+          title="React"
+          style={{ top: 20 }}
+          visible={this.state.showModal3}
+          onCancel={() => {
+            this.setState({
+              showModal3: false
+            });
+          }}
+        >
+          <p>欢迎学习React Antd课程</p>
+        </Modal>
+        <Modal
+          title="React"
+          wrapClassName="vertical-center-modal"
+          visible={this.state.showModal4}
+          onCancel={() => {
+            this.setState({
+              showModal4: false
+            });
+          }}
+        >
+          <p>欢迎学习React Antd课程</p>
+        </Modal>
       </div>
     );
   }

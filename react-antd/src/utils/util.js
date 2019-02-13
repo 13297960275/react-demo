@@ -12,11 +12,11 @@ export default {
 		let minutes = date.getMinutes()
 		let seconds = date.getSeconds()
 		return date.getFullYear() + '-' +
-			(months > 10 ? months : ('0' + months)) + '-' +
-			(days > 10 ? days : ('0' + days)) + ' ' +
-			(hours > 10 ? hours : ('0' + hours)) + ':' +
-			(minutes > 10 ? minutes : ('0' + minutes)) + ':' +
-			(seconds > 10 ? seconds : ('0' + seconds)) + ' ' +
+			(months >= 10 ? months : ('0' + months)) + '-' +
+			(days >= 10 ? days : ('0' + days)) + ' ' +
+			(hours >= 10 ? hours : ('0' + hours)) + ':' +
+			(minutes >= 10 ? minutes : ('0' + minutes)) + ':' +
+			(seconds >= 10 ? seconds : ('0' + seconds)) + ' ' +
 			weekday[date.getDay()]
 	},
 	pagination(data, callback) {

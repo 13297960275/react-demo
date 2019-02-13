@@ -40,7 +40,7 @@ export default class NavLeft extends React.Component {
     return (
       <div>
         <div className="logo">
-          <img src="./assets/antd.svg" alt="" />
+          <img src="./assets/imgs/antd.svg" alt="" />
           <h1> React Antd </h1>
         </div>
 
