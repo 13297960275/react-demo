@@ -19,16 +19,16 @@ export default {
 			(seconds >= 10 ? seconds : ('0' + seconds)) + ' ' +
 			weekday[date.getDay()]
 	},
-	pagination(data, callback) {
+	pagination(page, callback) {
 		return {
 			onChange: (current) => {
 				callback(current)
 			},
-			current: data.result.page,
-			pageSize: data.result.page_size,
-			total: data.result.total_count,
+			current: parseInt(page.current),
+			pageSize: parseInt(page.size),
+			total: parseInt(page.total),
 			showTotal: () => {
-				return `共${data.result.total_count}条`
+				return `共${page.total}条`
 			},
 			showQuickJumper: true
 		}

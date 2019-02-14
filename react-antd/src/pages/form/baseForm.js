@@ -157,7 +157,7 @@ class baseForm extends React.Component {
         <Form.Item {...formItemLayout} label="Rate">
           {getFieldDecorator("rate", {
             initialValue: 3.5
-          })(<Rate />)}
+          })(<Rate allowHalf />)}
         </Form.Item>
 
         <Form.Item

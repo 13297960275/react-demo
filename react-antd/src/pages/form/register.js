@@ -26,29 +26,40 @@ const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const TextArea = Input.TextArea;
 const AutoCompleteOption = AutoComplete.Option;
-const residences = [{
-  value: 'zhejiang',
-  label: '浙江',
-  children: [{
-    value: 'hangzhou',
-    label: '杭州',
-    children: [{
-      value: 'xihu',
-      label: '西湖',
-    }],
-  }],
-}, {
-  value: 'jiangsu',
-  label: '江苏',
-  children: [{
-    value: 'nanjing',
-    label: '南京',
-    children: [{
-      value: 'zhonghuamen',
-      label: '中华门',
-    }],
-  }],
-}];
+const residences = [
+  {
+    value: "zhejiang",
+    label: "浙江",
+    children: [
+      {
+        value: "hangzhou",
+        label: "杭州",
+        children: [
+          {
+            value: "xihu",
+            label: "西湖"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    value: "jiangsu",
+    label: "江苏",
+    children: [
+      {
+        value: "nanjing",
+        label: "南京",
+        children: [
+          {
+            value: "zhonghuamen",
+            label: "中华门"
+          }
+        ]
+      }
+    ]
+  }
+];
 class FormRegister extends React.Component {
   state = {
     autoCompleteResult: []
@@ -63,7 +74,7 @@ class FormRegister extends React.Component {
         console.log(JSON.stringify(userInfo));
         message.success(
           `${userInfo.userName} 恭喜你，注册成功；当前密码为：${
-          userInfo.userPwd
+            userInfo.userPwd
           }`
         );
       }
@@ -159,7 +170,7 @@ class FormRegister extends React.Component {
         <Option value="86">+86</Option>
         <Option value="87">+87</Option>
       </Select>
-      );
+    );
 
     const websiteOptions = autoCompleteResult.map(website => (
       <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
@@ -209,7 +220,7 @@ class FormRegister extends React.Component {
                   placeholder="请输入确认密码"
                   onBlur={this.handleConfirmBlur}
                 />
-                )}
+              )}
             </Form.Item>
             <Form.Item
               {...formItemLayout}
@@ -257,8 +268,12 @@ class FormRegister extends React.Component {
                   }
                 ]
               })(
-                <Input placeholder="请输入手机号" addonBefore={prefixSelector} style={{ width: "100%" }} />
-                )}
+                <Input
+                  placeholder="请输入手机号"
+                  addonBefore={prefixSelector}
+                  style={{ width: "100%" }}
+                />
+              )}
             </Form.Item>
             <Form.Item {...formItemLayout} label="网址">
               {getFieldDecorator("website", {
@@ -271,7 +286,7 @@ class FormRegister extends React.Component {
                 >
                   <Input />
                 </AutoComplete>
-                )}
+              )}
             </Form.Item>
 
             <FormItem label="性别" {...formItemLayout}>
@@ -282,7 +297,7 @@ class FormRegister extends React.Component {
                   <Radio value="1">男</Radio>
                   <Radio value="2">女</Radio>
                 </RadioGroup>
-                )}
+              )}
             </FormItem>
             <FormItem label="年龄" {...formItemLayout}>
               {getFieldDecorator("age", {
@@ -300,7 +315,7 @@ class FormRegister extends React.Component {
                   <Option value="4">百度FE</Option>
                   <Option value="5">创业者</Option>
                 </Select>
-                )}
+              )}
             </FormItem>
             <FormItem label="爱好" {...formItemLayout}>
               {getFieldDecorator("interest", {
@@ -316,18 +331,19 @@ class FormRegister extends React.Component {
                   <Option value="7">桌球</Option>
                   <Option value="8">麦霸</Option>
                 </Select>
-                )}
+              )}
             </FormItem>
-            <Form.Item
-              {...formItemLayout}
-              label="常住地"
-            >
-              {getFieldDecorator('residence', {
-                initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-                rules: [{ type: 'array', required: true, message: 'Please select your habitual residence!' }],
-              })(
-                <Cascader options={residences} />
-                )}
+            <Form.Item {...formItemLayout} label="常住地">
+              {getFieldDecorator("residence", {
+                initialValue: ["zhejiang", "hangzhou", "xihu"],
+                rules: [
+                  {
+                    type: "array",
+                    required: true,
+                    message: "Please select your habitual residence!"
+                  }
+                ]
+              })(<Cascader options={residences} />)}
             </Form.Item>
             <FormItem label="是否已婚" {...formItemLayout}>
               {getFieldDecorator("isMarried", {
@@ -359,8 +375,8 @@ class FormRegister extends React.Component {
                   {this.state.userImg ? (
                     <img src={this.state.userImg} alt="" />
                   ) : (
-                      <Icon type="plus" />
-                    )}
+                    <Icon type="plus" />
+                  )}
                 </Upload>
               )}
             </FormItem>

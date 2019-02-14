@@ -1,0 +1,22 @@
+{
+  "code": 200,
+  "message": "success",
+  "result": {
+    "list|5": [{
+      "id|+1": 1,
+      "username": "@cname",
+      "sex|1-2": 1,
+      "state|1-5": 1,
+      "interest|1-8": 1,
+      "isMarried|0-1": 1,
+      "birthday": "@date(yyyy-MM-dd)",
+      "address": "@province@city@county@region",
+      "time": "@datetime(hh:MM:ss)"
+    }],
+    "page": {
+      "current|1-6": 1,
+      "size": 5,
+      "total": 30
+    }
+  }
+}

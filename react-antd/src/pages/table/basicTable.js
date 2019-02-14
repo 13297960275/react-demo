@@ -15,7 +15,7 @@ export default class BasicTable extends React.Component {
     const data = [
       {
         id: "0",
-        userName: "Jack",
+        username: "Jack",
         sex: "1",
         state: "1",
         interest: "1",
@@ -25,7 +25,7 @@ export default class BasicTable extends React.Component {
       },
       {
         id: "1",
-        userName: "Tom",
+        username: "Tom",
         sex: "1",
         state: "1",
         interest: "1",
@@ -35,7 +35,7 @@ export default class BasicTable extends React.Component {
       },
       {
         id: "2",
-        userName: "Lily",
+        username: "Lily",
         sex: "1",
         state: "1",
         interest: "1",
@@ -56,9 +56,15 @@ export default class BasicTable extends React.Component {
   // 动态获取mock数据
   request = () => {
     let _this = this;
+    let baseUrl =
+      "https://www.easy-mock.com/mock/5c64ce1ad189e406bc6a86c0/mockApi/";
+    let baseUrl1 = "mock/";
     axios
       .ajax({
-        url: "mock/table/list",
+        url: "table/list",
+        method: "get",
+        baseUrl: baseUrl,
+        code: 200,
         data: {
           params: {
             page: this.params.page
@@ -66,7 +72,7 @@ export default class BasicTable extends React.Component {
         }
       })
       .then(res => {
-        if (res.code == 0) {
+        if (res.code == 200) {
           res.result.list.map((item, index) => {
             item.key = index;
           });
@@ -74,7 +80,8 @@ export default class BasicTable extends React.Component {
             dataSource2: res.result.list,
             selectedRowKeys: [],
             selectedRows: null,
-            pagination: Utils.pagination(res, current => {
+            pagination: Utils.pagination(res.result.page, current => {
+              console.log(current)
               _this.params.page = current;
               this.request();
             })
@@ -83,12 +90,25 @@ export default class BasicTable extends React.Component {
       });
   };
 
-  onRowClick = (record, index) => {
-    let selectKey = [index];
+  onRadioRowClick = (record, index) => {
+    let selectKey = this.state.radioSelectedRowKeys === index ? [] : [index];
     Modal.info({
       title: "信息",
-      content: `用户名：${record.userName},用户爱好：${record.interest}`
+      content: `用户名：${record.username},用户爱好：${record.interest}`
     });
+    this.setState({
+      radioSelectedRowKeys: selectKey,
+      radioSelectedItem: record
+    });
+  };
+
+  onRowClick = (record, index) => {
+    console.log();
+    let selectKey = [index];
+    // Modal.info({
+    //   title: "信息",
+    //   content: `用户名：${record.username},用户爱好：${record.interest}`
+    // });
     this.setState({
       selectedRowKeys: selectKey,
       selectedItem: record
@@ -121,8 +141,8 @@ export default class BasicTable extends React.Component {
       },
       {
         title: "用户名",
-        key: "userName",
-        dataIndex: "userName"
+        key: "username",
+        dataIndex: "username"
       },
       {
         title: "性别",
@@ -182,14 +202,16 @@ export default class BasicTable extends React.Component {
       }
     ];
     const selectedRowKeys = this.state.selectedRowKeys;
+    const radioSelectedRowKeys = this.state.radioSelectedRowKeys;
     const rowSelection = {
       type: "radio",
-      selectedRowKeys
+      selectedRowKeys: radioSelectedRowKeys
     };
     const rowCheckSelection = {
       type: "checkbox",
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
+        // console.log(selectedRowKeys, selectedRows)
         this.setState({
           selectedRowKeys,
           selectedRows
@@ -221,7 +243,7 @@ export default class BasicTable extends React.Component {
             onRow={(record, index) => {
               return {
                 onClick: () => {
-                  this.onRowClick(record, index);
+                  this.onRadioRowClick(record, index);
                 }
               };
             }}
@@ -230,13 +252,20 @@ export default class BasicTable extends React.Component {
             pagination={false}
           />
         </Card>
-        <Card title="Mock-单选" style={{ margin: "10px 0" }}>
+        <Card title="Mock-多选" style={{ margin: "10px 0" }}>
           <div style={{ marginBottom: 10 }}>
             <Button onClick={this.handleDelete}>删除</Button>
           </div>
           <Table
             bordered
             rowSelection={rowCheckSelection}
+            // onRow={(record, index) => {
+            //   return {
+            //     onClick: () => {
+            //       this.onRowClick(record, index);
+            //     }
+            //   };
+            // }}
             columns={columns}
             dataSource={this.state.dataSource2}
             pagination={false}
