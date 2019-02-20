@@ -14,9 +14,13 @@ export default class BasicTable extends React.Component {
   // 动态获取mock数据
   request = () => {
     let _this = this;
+    let baseUrl =
+      "https://www.easy-mock.com/mock/5c64ce1ad189e406bc6a86c0/mockApi/";
     axios
       .ajax({
         url: "/table/high/list",
+        baseUrl: baseUrl,
+        code: 200,
         data: {
           params: {
             page: this.params.page
@@ -24,7 +28,7 @@ export default class BasicTable extends React.Component {
         }
       })
       .then(res => {
-        if (res.code == 0) {
+        if (res.code === 200) {
           res.result.list.map((item, index) => {
             item.key = index;
           });
@@ -65,9 +69,9 @@ export default class BasicTable extends React.Component {
       },
       {
         title: "用户名",
-        key: "userName",
+        key: "username",
         width: 80,
-        dataIndex: "userName"
+        dataIndex: "username"
       },
       {
         title: "性别",
@@ -75,7 +79,7 @@ export default class BasicTable extends React.Component {
         width: 80,
         dataIndex: "sex",
         render(sex) {
-          return sex == 1 ? "男" : "女";
+          return sex === 1 ? "男" : "女";
         }
       },
       {
@@ -142,10 +146,10 @@ export default class BasicTable extends React.Component {
       },
       {
         title: "用户名",
-        key: "userName",
+        key: "username",
         width: 80,
         fixed: "left",
-        dataIndex: "userName"
+        dataIndex: "username"
       },
       {
         title: "性别",
@@ -153,7 +157,7 @@ export default class BasicTable extends React.Component {
         width: 80,
         dataIndex: "sex",
         render(sex) {
-          return sex == 1 ? "男" : "女";
+          return sex === 1 ? "男" : "女";
         }
       },
       {
@@ -316,15 +320,15 @@ export default class BasicTable extends React.Component {
       },
       {
         title: "用户名",
-        key: "userName",
-        dataIndex: "userName"
+        key: "username",
+        dataIndex: "username"
       },
       {
         title: "性别",
         key: "sex",
         dataIndex: "sex",
         render(sex) {
-          return sex == 1 ? "男" : "女";
+          return sex === 1 ? "男" : "女";
         }
       },
       {
@@ -392,13 +396,13 @@ export default class BasicTable extends React.Component {
       },
       {
         title: "用户名",
-        dataIndex: "userName"
+        dataIndex: "username"
       },
       {
         title: "性别",
         dataIndex: "sex",
         render(sex) {
-          return sex == 1 ? "男" : "女";
+          return sex === 1 ? "男" : "女";
         }
       },
       {
@@ -410,11 +414,11 @@ export default class BasicTable extends React.Component {
         dataIndex: "state",
         render(state) {
           let config = {
-            "1": "咸鱼一条",
-            "2": "风华浪子",
-            "3": "北大才子",
-            "4": "百度FE",
-            "5": "创业者"
+            "1": <Badge status="success" text="成功" />,
+            "2": <Badge status="error" text="报错" />,
+            "3": <Badge status="default" text="正常" />,
+            "4": <Badge status="processing" text="进行中" />,
+            "5": <Badge status="warning" text="警告" />
           };
           return config[state];
         }
@@ -424,11 +428,14 @@ export default class BasicTable extends React.Component {
         dataIndex: "interest",
         render(abc) {
           let config = {
-            "1": <Badge status="success" text="成功" />,
-            "2": <Badge status="error" text="报错" />,
-            "3": <Badge status="default" text="正常" />,
-            "4": <Badge status="processing" text="进行中" />,
-            "5": <Badge status="warning" text="警告" />
+            "1": "游泳",
+            "2": "打篮球",
+            "3": "踢足球",
+            "4": "跑步",
+            "5": "爬山",
+            "6": "骑行",
+            "7": "桌球",
+            "8": "麦霸"
           };
           return config[abc];
         }

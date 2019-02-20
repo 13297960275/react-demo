@@ -1,11 +1,6 @@
-import React from 'react'
+import React from "react";
 export default class Home extends React.Component {
-
-    render() {
-        return (
-            <div>
-                404 No Pages.
-            </div>
-        );
-    }
+  render() {
+    return <div>404 No Pages.</div>;
+  }
 }

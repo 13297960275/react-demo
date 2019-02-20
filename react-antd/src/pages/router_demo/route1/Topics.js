@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 export default class Topics extends React.Component {
   render() {
-    return (
-      <div>
-				Topics page 1
-			</div>
-    )
+    return <div>Topics page 1</div>;
   }
 }

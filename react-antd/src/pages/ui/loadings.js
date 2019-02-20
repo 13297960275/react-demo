@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Spin, Icon, Alert } from "antd";
+import { Card, Spin, Icon, Alert } from "antd";
 import "./ui.less";
 export default class Loadings extends React.Component {
   render() {
@@ -37,11 +37,7 @@ export default class Loadings extends React.Component {
             />
           </Spin>
           <Spin indicator={iconLoading}>
-            <Alert
-              message="React"
-              description="加载中"
-              type="warning"
-            />
+            <Alert message="React" description="加载中" type="warning" />
           </Spin>
         </Card>
       </div>

@@ -209,4 +209,3 @@ class baseForm extends React.Component {
 }
 
 export default Form.create({ name: "validate_other" })(baseForm);
-

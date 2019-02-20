@@ -2,14 +2,10 @@ import React from "react";
 import {
   Card,
   Button,
-  Table,
   Form,
   Input,
-  Checkbox,
   Select,
   Radio,
-  Icon,
-  message,
   Modal,
   DatePicker
 } from "antd";
@@ -61,13 +57,13 @@ export default class User extends React.Component {
   // 操作员工
   handleOperator = type => {
     let item = this.state.selectedItem;
-    if (type == "create") {
+    if (type === "create") {
       this.setState({
         title: "创建员工",
         isVisible: true,
         type
       });
-    } else if (type == "edit" || type == "detail") {
+    } else if (type === "edit" || type === "detail") {
       if (!item) {
         Modal.info({
           title: "信息",
@@ -76,12 +72,12 @@ export default class User extends React.Component {
         return;
       }
       this.setState({
-        title: type == "edit" ? "编辑用户" : "查看详情",
+        title: type === "edit" ? "编辑用户" : "查看详情",
         isVisible: true,
         userInfo: item,
         type
       });
-    } else if (type == "delete") {
+    } else if (type === "delete") {
       if (!item) {
         Modal.info({
           title: "信息",
@@ -102,7 +98,7 @@ export default class User extends React.Component {
               }
             })
             .then(res => {
-              if (res.code == 0) {
+              if (res.code === 0) {
                 this.setState({
                   isVisible: false
                 });
@@ -119,7 +115,7 @@ export default class User extends React.Component {
     let data = this.userForm.props.form.getFieldsValue();
     axios
       .ajax({
-        url: type == "create" ? "/user/add" : "/user/edit",
+        url: type === "create" ? "/user/add" : "/user/edit",
         data: {
           params: {
             ...data
@@ -127,7 +123,7 @@ export default class User extends React.Component {
         }
       })
       .then(res => {
-        if (res.code == 0) {
+        if (res.code === 0) {
           this.setState({
             isVisible: false
           });
@@ -150,7 +146,7 @@ export default class User extends React.Component {
         title: "性别",
         dataIndex: "sex",
         render(sex) {
-          return sex == 1 ? "男" : "女";
+          return sex === 1 ? "男" : "女";
         }
       },
       {
@@ -295,15 +291,15 @@ class UserForm extends React.Component {
     return (
       <Form layout="horizontal">
         <FormItem label="姓名" {...formItemLayout}>
-          {userInfo && type == "detail"
+          {userInfo && type === "detail"
             ? userInfo.username
             : getFieldDecorator("user_name", {
                 initialValue: userInfo.username
               })(<Input type="text" placeholder="请输入姓名" />)}
         </FormItem>
         <FormItem label="性别" {...formItemLayout}>
-          {userInfo && type == "detail"
-            ? userInfo.sex == 1
+          {userInfo && type === "detail"
+            ? userInfo.sex === 1
               ? "男"
               : "女"
             : getFieldDecorator("sex", {
@@ -316,7 +312,7 @@ class UserForm extends React.Component {
               )}
         </FormItem>
         <FormItem label="状态" {...formItemLayout}>
-          {userInfo && type == "detail"
+          {userInfo && type === "detail"
             ? this.getState(userInfo.state)
             : getFieldDecorator("state", {
                 initialValue: userInfo.state
@@ -331,14 +327,14 @@ class UserForm extends React.Component {
               )}
         </FormItem>
         <FormItem label="生日" {...formItemLayout}>
-          {userInfo && type == "detail"
+          {userInfo && type === "detail"
             ? userInfo.birthday
             : getFieldDecorator("birthday", {
                 initialValue: Moment(userInfo.birthday)
               })(<DatePicker />)}
         </FormItem>
         <FormItem label="联系地址" {...formItemLayout}>
-          {userInfo && type == "detail"
+          {userInfo && type === "detail"
             ? userInfo.address
             : getFieldDecorator("address", {
                 initialValue: userInfo.address

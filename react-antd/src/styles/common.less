@@ -1,56 +1,67 @@
 @import './default.less';
 @import './loading.less';
-ul,li{
+
+ul,
+li {
     list-style: none;
 }
-.clearfix{
-    &::after{
-        content:' ';
-        clear:both;
+
+.clearfix {
+    &::after {
+        content: ' ';
+        clear: both;
         display: block;
         visibility: hidden;
     }
 }
-.container{
-    .nav-left{
-        background-color:@colorR;
+
+.container {
+    .nav-left {
+        background-color: @colorR;
         color: @colorM;
         height: calc(100vh);
     }
-    .main{
+
+    .main {
         height: calc(100vh);
         background-color: @colorL;
         overflow: auto;
         display: flex;
         flex-direction: column;
-        .header{
+
+        .header {
             flex: 0 0 auto;
         }
-        .content{
+
+        .content {
             flex: 1 0 auto;
             position: relative;
             background-color: @colorM;
             padding: 20px;
         }
+
         .footer {
             flex: 0 0 auto;
         }
     }
 }
 
-.content-wrap{
+.content-wrap {
     background: #ffffff;
     border: 1px solid #e8e8e8;
     margin-top: -3px;
-    .ant-table-wrapper{
+
+    .ant-table-wrapper {
         margin-left: -1px;
         margin-right: -2px;
     }
 }
-.ant-card{
+
+.ant-card {
     margin: 10px;
     box-shadow: 0 4px 8px @colorL;
-    button{
+
+    button {
         margin-right: 10px;
     }
 }

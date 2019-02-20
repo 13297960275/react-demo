@@ -1,285 +1,205 @@
 import React from "react";
-import { Card, Table, Modal, Button, message } from "antd";
-import axios from "./../../axios/index";
-import Utils from "./../../utils/util";
-export default class BasicTable extends React.Component {
-  state = {
-    dataSource2: []
-  };
+import {
+  Table,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Form,
+  Card
+} from "antd";
 
-  params = {
-    page: 1
-  };
+const data = [];
+for (let i = 0; i < 100; i++) {
+  data.push({
+    key: i.toString(),
+    name: `Edrward ${i}`,
+    age: 32,
+    address: `London Park no. ${i}`
+  });
+}
+const FormItem = Form.Item;
+const EditableContext = React.createContext();
 
-  componentDidMount() {
-    const data = [
-      {
-        id: "0",
-        username: "Jack",
-        sex: "1",
-        state: "1",
-        interest: "1",
-        birthday: "2000-01-01",
-        address: "北京市海淀区奥林匹克公园",
-        time: "09:00"
-      },
-      {
-        id: "1",
-        username: "Tom",
-        sex: "1",
-        state: "1",
-        interest: "1",
-        birthday: "2000-01-01",
-        address: "北京市海淀区奥林匹克公园",
-        time: "09:00"
-      },
-      {
-        id: "2",
-        username: "Lily",
-        sex: "1",
-        state: "1",
-        interest: "1",
-        birthday: "2000-01-01",
-        address: "北京市海淀区奥林匹克公园",
-        time: "09:00"
-      }
-    ];
-    data.map((item, index) => {
-      item.key = index;
-    });
-    this.setState({
-      dataSource: data
-    });
-    this.request();
-  }
+const EditableRow = ({ form, index, ...props }) => (
+  <EditableContext.Provider value={form}>
+    <tr {...props} />
+  </EditableContext.Provider>
+);
 
-  // 动态获取mock数据
-  request = () => {
-    let _this = this;
-    let baseUrl =
-      "https://www.easy-mock.com/mock/5c64ce1ad189e406bc6a86c0/mockApi/";
-    let baseUrl1 = "mock/";
-    axios
-      .ajax({
-        url: "table/list",
-        method: "get",
-        baseUrl: baseUrl,
-        code: 200,
-        data: {
-          params: {
-            page: this.params.page
-          }
-        }
-      })
-      .then(res => {
-        if (res.code == 200) {
-          res.result.list.map((item, index) => {
-            item.key = index;
-          });
-          this.setState({
-            dataSource2: res.result.list,
-            selectedRowKeys: [],
-            selectedRows: null,
-            pagination: Utils.pagination(res.result.page, current => {
-              console.log(current)
-              _this.params.page = current;
-              this.request();
-            })
-          });
-        }
-      });
-  };
+const EditableFormRow = Form.create()(EditableRow);
 
-  onRadioRowClick = (record, index) => {
-    let selectKey = this.state.radioSelectedRowKeys === index ? [] : [index];
-    Modal.info({
-      title: "信息",
-      content: `用户名：${record.username},用户爱好：${record.interest}`
-    });
-    this.setState({
-      radioSelectedRowKeys: selectKey,
-      radioSelectedItem: record
-    });
-  };
-
-  onRowClick = (record, index) => {
-    console.log();
-    let selectKey = [index];
-    // Modal.info({
-    //   title: "信息",
-    //   content: `用户名：${record.username},用户爱好：${record.interest}`
-    // });
-    this.setState({
-      selectedRowKeys: selectKey,
-      selectedItem: record
-    });
-  };
-
-  // 多选执行删除动作
-  handleDelete = () => {
-    let rows = this.state.selectedRows;
-    let ids = [];
-    rows.map(item => {
-      ids.push(item.id);
-    });
-    Modal.confirm({
-      title: "删除提示",
-      content: `您确定要删除这些数据吗？${ids.join(",")}`,
-      onOk: () => {
-        message.success("删除成功");
-        this.request();
-      }
-    });
+class EditableCell extends React.Component {
+  getInput = () => {
+    if (this.props.inputType === "number") {
+      return <InputNumber />;
+    }
+    return <Input />;
   };
 
   render() {
-    const columns = [
+    const {
+      editing,
+      dataIndex,
+      title,
+      inputType,
+      record,
+      index,
+      ...restProps
+    } = this.props;
+    return (
+      <EditableContext.Consumer>
+        {form => {
+          const { getFieldDecorator } = form;
+          return (
+            <td {...restProps}>
+              {editing ? (
+                <FormItem style={{ margin: 0 }}>
+                  {getFieldDecorator(dataIndex, {
+                    rules: [
+                      {
+                        required: true,
+                        message: `Please Input ${title}!`
+                      }
+                    ],
+                    initialValue: record[dataIndex]
+                  })(this.getInput())}
+                </FormItem>
+              ) : (
+                restProps.children
+              )}
+            </td>
+          );
+        }}
+      </EditableContext.Consumer>
+    );
+  }
+}
+
+export default class EditableTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data, editingKey: "" };
+    this.columns = [
       {
-        title: "id",
-        key: "id",
-        dataIndex: "id"
+        title: "name",
+        dataIndex: "name",
+        width: "25%",
+        editable: true
       },
       {
-        title: "用户名",
-        key: "username",
-        dataIndex: "username"
+        title: "age",
+        dataIndex: "age",
+        width: "15%",
+        editable: true
       },
       {
-        title: "性别",
-        key: "sex",
-        dataIndex: "sex",
-        render(sex) {
-          return sex == 1 ? "男" : "女";
+        title: "address",
+        dataIndex: "address",
+        width: "40%",
+        editable: true
+      },
+      {
+        title: "operation",
+        dataIndex: "operation",
+        render: (text, record) => {
+          const editable = this.isEditing(record);
+          return (
+            <div>
+              {editable ? (
+                <span>
+                  <EditableContext.Consumer>
+                    {form => (
+                      <a
+                        href="javascript:;"
+                        onClick={() => this.save(form, record.key)}
+                        style={{ marginRight: 8 }}
+                      >
+                        Save
+                      </a>
+                    )}
+                  </EditableContext.Consumer>
+                  <Popconfirm
+                    title="Sure to cancel?"
+                    onConfirm={() => this.cancel(record.key)}
+                  >
+                    <a>Cancel</a>
+                  </Popconfirm>
+                </span>
+              ) : (
+                <a onClick={() => this.edit(record.key)}>Edit</a>
+              )}
+            </div>
+          );
         }
-      },
-      {
-        title: "状态",
-        key: "state",
-        dataIndex: "state",
-        render(state) {
-          let config = {
-            "1": "咸鱼一条",
-            "2": "风华浪子",
-            "3": "北大才子",
-            "4": "百度FE",
-            "5": "创业者"
-          };
-          return config[state];
-        }
-      },
-      {
-        title: "爱好",
-        key: "interest",
-        dataIndex: "interest",
-        render(abc) {
-          let config = {
-            "1": "游泳",
-            "2": "打篮球",
-            "3": "踢足球",
-            "4": "跑步",
-            "5": "爬山",
-            "6": "骑行",
-            "7": "桌球",
-            "8": "麦霸"
-          };
-          return config[abc];
-        }
-      },
-      {
-        title: "生日",
-        key: "birthday",
-        dataIndex: "birthday"
-      },
-      {
-        title: "地址",
-        key: "address",
-        dataIndex: "address"
-      },
-      {
-        title: "早起时间",
-        key: "time",
-        dataIndex: "time"
       }
     ];
-    const selectedRowKeys = this.state.selectedRowKeys;
-    const radioSelectedRowKeys = this.state.radioSelectedRowKeys;
-    const rowSelection = {
-      type: "radio",
-      selectedRowKeys: radioSelectedRowKeys
-    };
-    const rowCheckSelection = {
-      type: "checkbox",
-      selectedRowKeys,
-      onChange: (selectedRowKeys, selectedRows) => {
-        // console.log(selectedRowKeys, selectedRows)
-        this.setState({
-          selectedRowKeys,
-          selectedRows
+  }
+
+  isEditing = record => record.key === this.state.editingKey;
+
+  cancel = () => {
+    this.setState({ editingKey: "" });
+  };
+
+  save(form, key) {
+    form.validateFields((error, row) => {
+      if (error) {
+        return;
+      }
+      const newData = [...this.state.data];
+      const index = newData.findIndex(item => key === item.key);
+      if (index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, {
+          ...item,
+          ...row
         });
+        this.setState({ data: newData, editingKey: "" });
+      } else {
+        newData.push(row);
+        this.setState({ data: newData, editingKey: "" });
+      }
+    });
+  }
+
+  edit(key) {
+    this.setState({ editingKey: key });
+  }
+
+  render() {
+    const components = {
+      body: {
+        row: EditableFormRow,
+        cell: EditableCell
       }
     };
+
+    const columns = this.columns.map(col => {
+      if (!col.editable) {
+        return col;
+      }
+      return {
+        ...col,
+        onCell: record => ({
+          record,
+          inputType: col.dataIndex === "age" ? "number" : "text",
+          dataIndex: col.dataIndex,
+          title: col.title,
+          editing: this.isEditing(record)
+        })
+      };
+    });
+
     return (
-      <div>
-        <Card title="基础表格">
-          <Table
-            bordered
-            columns={columns}
-            dataSource={this.state.dataSource}
-            pagination={false}
-          />
-        </Card>
-        <Card title="动态数据渲染表格-Mock" style={{ margin: "10px 0" }}>
-          <Table
-            bordered
-            columns={columns}
-            dataSource={this.state.dataSource2}
-            pagination={false}
-          />
-        </Card>
-        <Card title="Mock-单选" style={{ margin: "10px 0" }}>
-          <Table
-            bordered
-            rowSelection={rowSelection}
-            onRow={(record, index) => {
-              return {
-                onClick: () => {
-                  this.onRadioRowClick(record, index);
-                }
-              };
-            }}
-            columns={columns}
-            dataSource={this.state.dataSource2}
-            pagination={false}
-          />
-        </Card>
-        <Card title="Mock-多选" style={{ margin: "10px 0" }}>
-          <div style={{ marginBottom: 10 }}>
-            <Button onClick={this.handleDelete}>删除</Button>
-          </div>
-          <Table
-            bordered
-            rowSelection={rowCheckSelection}
-            // onRow={(record, index) => {
-            //   return {
-            //     onClick: () => {
-            //       this.onRowClick(record, index);
-            //     }
-            //   };
-            // }}
-            columns={columns}
-            dataSource={this.state.dataSource2}
-            pagination={false}
-          />
-        </Card>
-        <Card title="Mock-表格分页" style={{ margin: "10px 0" }}>
-          <Table
-            bordered
-            columns={columns}
-            dataSource={this.state.dataSource2}
-            pagination={this.state.pagination}
-          />
-        </Card>
-      </div>
+      <Card title="可编辑表格">
+        <Table
+          components={components}
+          bordered
+          dataSource={this.state.data}
+          columns={columns}
+          rowClassName="editable-row"
+        />
+      </Card>
     );
   }
 }

@@ -19,20 +19,36 @@ export default {
 			(seconds >= 10 ? seconds : ('0' + seconds)) + ' ' +
 			weekday[date.getDay()]
 	},
-	pagination(page, callback) {
+	// pagination(page, callback) {
+	// 	return {
+	// 		onChange: (current) => {
+	// 			callback(current)
+	// 		},
+	// 		current: parseInt(page.current),
+	// 		pageSize: parseInt(page.size),
+	// 		total: parseInt(page.total),
+	// 		showTotal: () => {
+	// 			return `共${page.total}条`
+	// 		},
+	// 		showQuickJumper: true
+	// 	}
+	// },
+
+	pagination(data, callback) {
 		return {
 			onChange: (current) => {
 				callback(current)
 			},
-			current: parseInt(page.current),
-			pageSize: parseInt(page.size),
-			total: parseInt(page.total),
+			current: data.result.page,
+			pageSize: data.result.page_size,
+			total: data.result.total_count,
 			showTotal: () => {
-				return `共${page.total}条`
+				return `共${data.result.total_count}条`
 			},
 			showQuickJumper: true
 		}
 	},
+	
 	// 格式化金额,单位:分(eg:430分=4.30元)
 	formatFee(fee, suffix = '') {
 		if (!fee) {

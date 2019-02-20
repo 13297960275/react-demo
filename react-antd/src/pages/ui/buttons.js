@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import {Card, Button, Icon, Dropdown, Menu, Radio} from 'antd'
+import React, { Component } from "react";
+import { Card, Button, Icon, Dropdown, Menu, Radio } from "antd";
 const ButtonGroup = Button.Group;
 
 function handleMenuClick(e) {
-  console.log('click', e);
+  console.log("click", e);
 }
 
 const menu = (
@@ -18,20 +18,20 @@ export default class Buttons extends Component {
   state = {
     loading: false,
     iconLoading: false,
-    size: 'large',
-  }
+    size: "large"
+  };
 
-  handleSizeChange = (e) => {
+  handleSizeChange = e => {
     this.setState({ size: e.target.value });
-  }
+  };
 
   enterLoading = () => {
     this.setState({ loading: true });
-  }
+  };
 
   enterIconLoading = () => {
     this.setState({ iconLoading: true });
-  }
+  };
 
   render() {
     const size = this.state.size;
@@ -39,24 +39,43 @@ export default class Buttons extends Component {
       <div>
         <Card title="按钮类型">
           <Button type="primary">Primary</Button>
-          <Button type="primary" disabled>Primary(disabled)</Button>
+          <Button type="primary" disabled>
+            Primary(disabled)
+          </Button>
           <Button>Default</Button>
           <Button disabled>Default(disabled)</Button>
           <Button type="dashed">Dashed</Button>
-          <Button type="dashed" disabled>Dashed(disabled)</Button>
-          <div style={{ background: 'rgb(190, 200, 200)', display: 'inline-block'}}>
+          <Button type="dashed" disabled>
+            Dashed(disabled)
+          </Button>
+          <div
+            style={{
+              background: "rgb(190, 200, 200)",
+              display: "inline-block"
+            }}
+          >
             <Button ghost>Ghost</Button>
-            <Button ghost disabled>Ghost(disabled)</Button>
+            <Button ghost disabled>
+              Ghost(disabled)
+            </Button>
           </div>
           <Button type="danger">Danger</Button>
-          <Button type="danger" disabled>Danger(disabled)</Button>
+          <Button type="danger" disabled>
+            Danger(disabled)
+          </Button>
         </Card>
 
         <Card title="block属性">
-          <Button type="primary" block>Primary</Button>
+          <Button type="primary" block>
+            Primary
+          </Button>
           <Button block>Default</Button>
-          <Button type="dashed" block>Dashed</Button>
-          <Button type="danger" block>danger</Button>
+          <Button type="dashed" block>
+            Dashed
+          </Button>
+          <Button type="danger" block>
+            danger
+          </Button>
         </Card>
 
         <Card title="按钮组">
@@ -79,10 +98,12 @@ export default class Buttons extends Component {
           <h4>With Icon</h4>
           <ButtonGroup>
             <Button type="primary">
-              <Icon type="left" />Go back
+              <Icon type="left" />
+              Go back
             </Button>
             <Button type="primary">
-              Go forward<Icon type="right" />
+              Go forward
+              <Icon type="right" />
             </Button>
           </ButtonGroup>
           <ButtonGroup>
@@ -93,14 +114,18 @@ export default class Buttons extends Component {
 
         <Card title="带图标的按钮">
           <Button type="primary" shape="circle" icon="search" />
-          <Button type="primary" icon="search">Search</Button>
+          <Button type="primary" icon="search">
+            Search
+          </Button>
           <Button shape="circle" icon="search" />
           <Button icon="search">Search</Button>
 
           <Button shape="circle" icon="search" />
           <Button icon="search">Search</Button>
           <Button type="dashed" shape="circle" icon="search" />
-          <Button type="dashed" icon="search">Search</Button>
+          <Button type="dashed" icon="search">
+            Search
+          </Button>
         </Card>
 
         <Card title="Loading按钮">
@@ -112,10 +137,19 @@ export default class Buttons extends Component {
               Loading
             </Button>
 
-            <Button type="primary" loading={this.state.loading} onClick={this.enterLoading}>
+            <Button
+              type="primary"
+              loading={this.state.loading}
+              onClick={this.enterLoading}
+            >
               Click me!
             </Button>
-            <Button type="primary" icon="poweroff" loading={this.state.iconLoading} onClick={this.enterIconLoading}>
+            <Button
+              type="primary"
+              icon="poweroff"
+              loading={this.state.iconLoading}
+              onClick={this.enterIconLoading}
+            >
               Click me!
             </Button>
 
@@ -141,20 +175,30 @@ export default class Buttons extends Component {
             <Radio.Button value="small">Small</Radio.Button>
           </Radio.Group>
           <br />
-          <Button type="primary" size={size}>Primary</Button>
+          <Button type="primary" size={size}>
+            Primary
+          </Button>
           <Button size={size}>Normal</Button>
-          <Button type="dashed" size={size}>Dashed</Button>
-          <Button type="danger" size={size}>Danger</Button>
+          <Button type="dashed" size={size}>
+            Dashed
+          </Button>
+          <Button type="danger" size={size}>
+            Danger
+          </Button>
 
           <Button type="primary" shape="circle" icon="download" size={size} />
-          <Button type="primary" icon="download" size={size}>Download</Button>
+          <Button type="primary" icon="download" size={size}>
+            Download
+          </Button>
 
           <Button.Group size={size}>
             <Button type="primary">
-              <Icon type="left" />Backward
+              <Icon type="left" />
+              Backward
             </Button>
             <Button type="primary">
-              Forward<Icon type="right" />
+              Forward
+              <Icon type="right" />
             </Button>
           </Button.Group>
         </Card>
