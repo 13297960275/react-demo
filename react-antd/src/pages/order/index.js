@@ -102,7 +102,7 @@ export default class Order extends React.Component {
         }
       })
       .then(res => {
-        if (res.code === 0) {
+        if (res.code === '0') {
           this.setState({
             orderInfo: res.result,
             orderConfirmVisble: true
@@ -124,7 +124,7 @@ export default class Order extends React.Component {
         }
       })
       .then(res => {
-        if (res.code === 0) {
+        if (res.code === '0') {
           message.success("订单结束成功");
           this.setState({
             orderConfirmVisble: false

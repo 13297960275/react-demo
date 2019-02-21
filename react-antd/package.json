@@ -12,6 +12,7 @@
     "jsonp": "^0.2.1",
     "less": "2.7.3",
     "less-loader": "^4.1.0",
+    "mockjs": "^1.0.1-beta3",
     "moment": "^2.24.0",
     "react": "^16.6.3",
     "react-app-rewire-define-plugin": "^1.0.0",

@@ -23,7 +23,7 @@ export default class Order extends React.Component {
         }
       })
       .then(res => {
-        if (res.code === 0) {
+        if (res.code === '0') {
           let list = res.result.item_list.map((item, i) => {
             item.key = i;
             return item;

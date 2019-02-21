@@ -19,20 +19,20 @@ export default {
 			(seconds >= 10 ? seconds : ('0' + seconds)) + ' ' +
 			weekday[date.getDay()]
 	},
-	// pagination(page, callback) {
-	// 	return {
-	// 		onChange: (current) => {
-	// 			callback(current)
-	// 		},
-	// 		current: parseInt(page.current),
-	// 		pageSize: parseInt(page.size),
-	// 		total: parseInt(page.total),
-	// 		showTotal: () => {
-	// 			return `共${page.total}条`
-	// 		},
-	// 		showQuickJumper: true
-	// 	}
-	// },
+	pagination1(page, callback) {
+		return {
+			onChange: (current) => {
+				callback(current)
+			},
+			current: parseInt(page.current),
+			pageSize: parseInt(page.size),
+			total: parseInt(page.total),
+			showTotal: () => {
+				return `共${page.total}条`
+			},
+			showQuickJumper: true
+		}
+	},
 
 	pagination(data, callback) {
 		return {

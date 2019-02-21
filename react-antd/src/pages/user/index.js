@@ -98,7 +98,7 @@ export default class User extends React.Component {
               }
             })
             .then(res => {
-              if (res.code === 0) {
+              if (res.code === '0') {
                 this.setState({
                   isVisible: false
                 });
@@ -123,7 +123,7 @@ export default class User extends React.Component {
         }
       })
       .then(res => {
-        if (res.code === 0) {
+        if (res.code === '0') {
           this.setState({
             isVisible: false
           });

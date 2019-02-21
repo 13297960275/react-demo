@@ -1,3 +1,5 @@
+import "./../mock";
+
 import Jsonp from "jsonp";
 import axios from "axios";
 import { Modal } from "antd";
@@ -29,71 +31,40 @@ export default class Axios {
     }
     let baseApi = "https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api";
     return new Promise((resolve, reject) => {
-      axios({
+      let req = {
         url: options.url,
-        method: "get",
-        baseURL: baseApi,
-        timeout: 500000,
-        params: (options.data && options.data.params) || ""
-      }).then(response => {
+        method: options.method || "get",
+        baseURL: options.baseUrl || baseApi,
+        timeout: 100000,
+        params: (options.data && options.data.params) || "",
+        data: (options.data && options.data.params) || ""
+      };
+      axios(req).then(response => {
         if (options.data && options.data.isShowLoading !== false) {
           loading = document.getElementById("ajaxLoading");
           loading.style.display = "none";
         }
         if (response.status === 200) {
           let res = response.data;
-          if (res.code === "0") {
+          if (res.code === 0 || res.code === options.code || res.code === "0") {
             resolve(res);
           } else {
             Modal.info({
               title: "提示",
-              content: res.msg
+              content: res.message
             });
           }
         } else {
+          if (loading) {
+            loading.style.display = "none";
+          }
+          Modal.info({
+            title: "提示",
+            content: "请求失败"
+          });
           reject(response.data);
         }
       });
     });
   }
-
-  // static ajax(options) {
-  // 	let loading;
-  // 	if (options.data && options.data.isShowLoading !== false) {
-  // 		loading = document.getElementById('ajaxLoading');
-  // 		loading.style.display = 'block';
-  // 	}
-  // 	return new Promise((resolve, reject) => {
-  // 		axios({
-  // 			url: options.url,
-  // 			method: options.method || 'get',
-  // 			baseURL: options.baseUrl,
-  // 			timeout: 100000,
-  // 			params: (options.data && options.data.params) || ''
-  // 		}).then((response) => {
-  // 			if (options.data && options.data.isShowLoading !== false) {
-  // 				loading = document.getElementById('ajaxLoading');
-  // 				loading.style.display = 'none';
-  // 			}
-  // 			if (response.status === '200') {
-  // 				let res = response.data;
-  // 				if (res.code === options.code) {
-  // 					resolve(res);
-  // 				} else {
-  // 					Modal.info({
-  // 						title: "提示",
-  // 						content: res.message
-  // 					})
-  // 				}
-  // 			} else {
-  // 				loading.style.display = 'none';
-  // 				Modal.info({
-  // 					title: "提示",
-  // 					content: "请求失败"
-  // 				})
-  // 				reject(response.data);
-  // 			}
-  // 		})
-  // 	});
-  // }
 }

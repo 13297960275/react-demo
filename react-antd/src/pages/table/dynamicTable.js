@@ -8,7 +8,9 @@ export default class BasicTable extends React.Component {
   };
 
   params = {
-    page: 1
+    page: 1,
+    size: 5,
+    ispage: true
   };
 
   componentDidMount() {
@@ -56,19 +58,15 @@ export default class BasicTable extends React.Component {
   // 动态获取mock数据
   request = () => {
     let _this = this;
-    let baseUrl =
-      "https://www.easy-mock.com/mock/5c64ce1ad189e406bc6a86c0/mockApi/";
-    let baseUrl1 = "mock/";
+    let baseUrl = "http://localhost:3000/";
     axios
       .ajax({
-        url: "table/list",
+        url: "/table/list",
         method: "get",
         baseUrl: baseUrl,
         code: 200,
         data: {
-          params: {
-            page: this.params.page
-          }
+          params: this.params
         }
       })
       .then(res => {
@@ -80,8 +78,7 @@ export default class BasicTable extends React.Component {
             dataSource2: res.result.list,
             selectedRowKeys: [],
             selectedRows: null,
-            pagination: Utils.pagination(res.result.page, current => {
-              console.log(current);
+            pagination: Utils.pagination1(res.result.page, current => {
               _this.params.page = current;
               this.request();
             })
