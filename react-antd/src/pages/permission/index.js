@@ -23,7 +23,7 @@ export default class Order extends React.Component {
         }
       })
       .then(res => {
-        if (res.code === '0') {
+        if (res.code === 0) {
           let list = res.result.item_list.map((item, i) => {
             item.key = i;
             return item;
@@ -199,7 +199,9 @@ export default class Order extends React.Component {
       {
         title: "创建时间",
         dataIndex: "create_time",
-        render: Utils.formatTime
+        render(time) {
+          return Utils.formateDate(time)
+        }
       },
       {
         title: "使用状态",
@@ -215,7 +217,9 @@ export default class Order extends React.Component {
       {
         title: "授权时间",
         dataIndex: "authorize_time",
-        render: Utils.formatTime
+        render(time) {
+          return Utils.formateDate(time)
+        }
       },
       {
         title: "授权人",

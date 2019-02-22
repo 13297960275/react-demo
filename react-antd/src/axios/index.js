@@ -35,36 +35,45 @@ export default class Axios {
         url: options.url,
         method: options.method || "get",
         baseURL: options.baseUrl || baseApi,
-        timeout: 100000,
+        timeout: 8000,
         params: (options.data && options.data.params) || "",
         data: (options.data && options.data.params) || ""
       };
-      axios(req).then(response => {
-        if (options.data && options.data.isShowLoading !== false) {
-          loading = document.getElementById("ajaxLoading");
-          loading.style.display = "none";
-        }
-        if (response.status === 200) {
-          let res = response.data;
-          if (res.code === 0 || res.code === options.code || res.code === "0") {
-            resolve(res);
+      axios(req)
+        .then(response => {
+          if (options.data && options.data.isShowLoading !== false) {
+            loading = document.getElementById("ajaxLoading");
+            loading.style.display = "none";
+          }
+          if (response.status === 200) {
+            let res = response.data;
+            if (
+              res.code === 0 ||
+              res.code === options.code ||
+              res.code === "0"
+            ) {
+              resolve(res);
+            } else {
+              Modal.info({
+                title: "提示",
+                content: res.message
+              });
+            }
           } else {
             Modal.info({
               title: "提示",
-              content: res.message
+              content: "请求失败"
             });
+            reject(response.data);
           }
-        } else {
-          if (loading) {
-            loading.style.display = "none";
-          }
+        })
+        .catch(error => {
           Modal.info({
             title: "提示",
-            content: "请求失败"
+            content: error
           });
-          reject(response.data);
-        }
-      });
+          reject(error);
+        });
     });
   }
 }

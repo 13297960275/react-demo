@@ -22,27 +22,33 @@ export default class User extends React.Component {
   };
 
   params = {
-    page: 1
+    page: 1,
+    size: 5,
+    ispage: true
   };
 
   requestList = () => {
+    let baseUrl = "http://localhost:3000/";
     axios
       .ajax({
-        url: "/table/list1",
+        url: "/table/list",
+        method: "get",
+        baseUrl: baseUrl,
+        code: 200,
         data: {
-          params: {
-            page: this.params.page
-          }
+          params: this.params
         }
       })
       .then(res => {
         let _this = this;
-        this.setState({
+      this.setState({
+          selectedRowKeys: null,
+          selectedItem: null,
           list: res.result.list.map((item, index) => {
             item.key = index;
             return item;
           }),
-          pagination: Utils.pagination(res, current => {
+          pagination: Utils.pagination1(res.result.page, current => {
             _this.params.page = current;
             _this.requestList();
           })
@@ -54,6 +60,11 @@ export default class User extends React.Component {
     this.requestList();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps, nextState)
+    return true
+  }
+
   // 操作员工
   handleOperator = type => {
     let item = this.state.selectedItem;
@@ -61,7 +72,8 @@ export default class User extends React.Component {
       this.setState({
         title: "创建员工",
         isVisible: true,
-        type
+        type,
+        userInfo: null
       });
     } else if (type === "edit" || type === "detail") {
       if (!item) {
@@ -85,7 +97,8 @@ export default class User extends React.Component {
         });
         return;
       }
-      Utils.ui.confirm({
+      // Utils.ui.confirm({
+      Modal.confirm({
         text: "确定要删除此用户吗？",
         onOk: () => {
           axios
@@ -98,7 +111,7 @@ export default class User extends React.Component {
               }
             })
             .then(res => {
-              if (res.code === '0') {
+              if (res.code === 0) {
                 this.setState({
                   isVisible: false
                 });
@@ -123,7 +136,7 @@ export default class User extends React.Component {
         }
       })
       .then(res => {
-        if (res.code === '0') {
+        if (res.code === 0) {
           this.setState({
             isVisible: false
           });
@@ -255,7 +268,7 @@ export default class User extends React.Component {
             this.userForm.props.form.resetFields();
             this.setState({
               isVisible: false,
-              userInfo: ""
+              userInfo: null
             });
           }}
         >
@@ -270,6 +283,11 @@ export default class User extends React.Component {
   }
 }
 class UserForm extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.type === 'edit') this.props.form.resetFields();
+    // console.log(nextProps);
+  }
+
   getState = state => {
     return {
       "1": "咸鱼一条",
